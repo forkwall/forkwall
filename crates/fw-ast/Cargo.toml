@@ -1,0 +1,15 @@
+[package]
+name = "fw-ast"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[lints]
+workspace = true
+
+[dependencies]
+fw-common.workspace = true
+# Enable when implementing Layer 2 SQL & Bash AST rules:
+# pg_query.workspace = true
+# tree-sitter.workspace = true
+# tree-sitter-bash.workspace = true

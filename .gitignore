@@ -1,0 +1,30 @@
+# Rust / Cargo
+/target
+**/*.rs.bk
+mutants.out/
+
+# Runtime / test artifacts
+*.mem
+*.snap
+*.sock
+
+# Secrets & local env
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.pfx
+*.secret
+
+# Local AI agent tooling & skills
+/.agents/
+/.claude/
+/skills-lock.json
+
+# OS & editor artifacts
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~

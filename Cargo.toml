@@ -1,0 +1,53 @@
+[workspace]
+members = [
+    "crates/fw-common",
+    "crates/fw-ast",
+    "crates/fw-proxy",
+]
+resolver = "2"
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+license = "Apache-2.0"
+
+[workspace.lints.cargo]
+unused_dependencies = "warn"
+
+[workspace.dependencies]
+# Internal workspace crates
+fw-common = { path = "crates/fw-common" }
+fw-ast = { path = "crates/fw-ast" }
+
+# Pin >=1.51.6 within ~1.51 LTS to patch RUSTSEC-2026-0386
+# and avoid yanked tokio 1.54.0 Interval UAF (RUSTSEC-2026-0384)
+tokio = { version = ">=1.51.6, <1.52.0", features = ["full"] }
+axum = { version = "0.8.9", features = ["macros", "http2"] }
+tower = { version = "0.5", features = ["timeout", "limit"] }
+hyper = { version = "1.5", features = ["full"] }
+rmcp = { version = "3.11.0", features = [
+    "server",
+    "transport-io",
+    "transport-streamable-http-server",
+    "transport-streamable-http-server-session",
+] }
+cedar-policy = "4.15.0"
+biscuit-auth = "6.0.0"
+ed25519-dalek = { version = "2.1", features = ["rand_core"] }
+blake3 = "1.8.3"
+pg_query = "18.1.0"
+tree-sitter = "0.25"
+tree-sitter-bash = "0.25.1"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+thiserror = "2.0"
+anyhow = "1.0"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter", "json"] }
+criterion = { version = "0.8.2", features = ["async_tokio"] }
+
+[profile.release]
+# Preserve unwind so DropGuard runs cleanly when linked into the private workspace
+panic = "unwind"
+lto = "thin"
+codegen-units = 1
